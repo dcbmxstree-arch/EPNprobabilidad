@@ -170,7 +170,200 @@
                 .tarjeta-asignatura { font-size: 1.5rem; }
                 .ficha { padding: 1.4rem 1.3rem; }
             }
-        
+
+            /* ======================================================= */
+            /* --- Quiz interactivo (opción múltiple seleccionable) --- */
+            /* ======================================================= */
+            .quiz-opciones {
+                list-style: none; margin: 0.8rem 0 0; padding: 0;
+                display: flex; flex-direction: column; gap: 0.5rem;
+            }
+            .quiz-opcion {
+                display: flex; align-items: flex-start; gap: 0.6rem;
+                background: #ffffff;
+                border: 1.5px solid #D8D3C0;
+                border-radius: 0.5rem;
+                padding: 0.55rem 0.8rem;
+                cursor: pointer;
+                transition: border-color .15s ease, background .15s ease;
+                font-family: 'Source Serif 4', Georgia, serif;
+            }
+            .quiz-opcion:hover { border-color: var(--teal); background: #FCFEFD; }
+            .quiz-opcion input[type="radio"] {
+                margin-top: 0.28rem; accent-color: var(--teal); flex-shrink: 0;
+            }
+            .quiz-opcion.seleccionada { border-color: var(--teal); background: var(--teal-soft); }
+            .quiz-opcion .letra {
+                font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+                color: var(--teal); margin-right: 0.1rem;
+            }
+            /* Estados tras calificar */
+            .pregunta-diagnostico.corregida .quiz-opcion { cursor: default; }
+            .pregunta-diagnostico.corregida .quiz-opcion.correcta-marca {
+                border-color: var(--teal); background: var(--teal-soft);
+            }
+            .pregunta-diagnostico.corregida .quiz-opcion.incorrecta-marca {
+                border-color: var(--brick); background: #FBEAE9;
+            }
+            .quiz-icono { margin-left: auto; font-weight: 700; font-family: 'IBM Plex Mono', monospace; }
+            .quiz-icono.ok { color: var(--teal); }
+            .quiz-icono.no { color: var(--brick); }
+            .pregunta-diagnostico { position: relative; }
+            .badge-estado {
+                position: absolute; top: -0.6rem; right: 0.9rem;
+                font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+                font-weight: 600; letter-spacing: 0.04em;
+                padding: 0.15rem 0.55rem; border-radius: 1rem;
+                border: 1.5px solid; background: #fff;
+            }
+            .badge-estado.ok { color: var(--teal); border-color: var(--teal); }
+            .badge-estado.no { color: var(--brick); border-color: var(--brick); }
+
+            /* --- Botón calificar y panel resultados --- */
+            .panel-calificar {
+                text-align: center; margin: 1.8rem 0 0.4rem;
+            }
+            .btn-calificar {
+                font-family: 'Space Grotesk', sans-serif;
+                font-weight: 700; font-size: 0.95rem;
+                background: var(--teal); color: white;
+                border: none; padding: 0.75rem 1.8rem;
+                border-radius: 2rem; cursor: pointer;
+                box-shadow: 4px 4px 0 var(--teal-soft);
+                transition: transform .12s ease;
+            }
+            .btn-calificar:hover { transform: translateY(-1px); }
+            .btn-calificar:active { transform: translateY(1px); box-shadow: 2px 2px 0 var(--teal-soft); }
+            .aviso-incompleto {
+                display: none; margin-top: 0.7rem; color: var(--brick);
+                font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+            }
+            .aviso-incompleto.mostrar { display: block; }
+
+            .panel-resultado {
+                display: none;
+                margin-top: 1.6rem;
+                background: #ffffff;
+                border: 1.5px solid var(--ink);
+                border-radius: 0.6rem;
+                padding: 1.6rem 1.8rem;
+                text-align: center;
+            }
+            .panel-resultado.mostrar { display: block; animation: aparecer .35s ease; }
+            @keyframes aparecer { from { opacity:0; transform: translateY(6px);} to {opacity:1; transform: translateY(0);} }
+            .resultado-numero {
+                font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+                font-size: 3rem; line-height: 1; margin: 0.2rem 0 0.1rem;
+            }
+            .resultado-numero.nivel-alto { color: var(--teal); }
+            .resultado-numero.nivel-medio { color: var(--amber); }
+            .resultado-numero.nivel-bajo { color: var(--brick); }
+            .resultado-etiqueta {
+                font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+                text-transform: uppercase; letter-spacing: 0.1em; color: #55607a;
+            }
+            .resultado-mensaje { margin: 0.9rem auto 0; max-width: 520px; color: #334155; }
+            .barra-progreso {
+                width: 100%; max-width: 420px; height: 10px; margin: 1.1rem auto 0;
+                background: #EDEAE0; border-radius: 6px; overflow: hidden;
+                border: 1px solid var(--grid-line);
+            }
+            .barra-progreso-fill { height: 100%; border-radius: 6px; transition: width .6s ease; }
+            .btn-reintentar {
+                font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+                background: transparent; color: var(--ink); border: 1.5px solid var(--ink);
+                padding: 0.45rem 1rem; border-radius: 1.2rem; cursor: pointer; margin-top: 1.2rem;
+            }
+            .btn-reintentar:hover { background: var(--ink); color: #fff; }
+
+            /* --- Recomendaciones de estudio --- */
+            .panel-recomendaciones {
+                display: none;
+                margin-top: 1.4rem;
+                background: var(--amber-soft);
+                border: 1.5px dashed var(--amber);
+                border-radius: 0.6rem;
+                padding: 1.4rem 1.6rem;
+            }
+            .panel-recomendaciones.mostrar { display: block; animation: aparecer .4s ease; }
+            .panel-recomendaciones h4 {
+                font-family: 'Space Grotesk', sans-serif; margin: 0 0 0.7rem;
+                color: var(--ink); font-size: 1.05rem;
+            }
+            .lista-recomendaciones { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+            .lista-recomendaciones li {
+                background: #fff; border-radius: 0.4rem; padding: 0.65rem 0.9rem;
+                border-left: 3px solid var(--amber); font-size: 0.92rem;
+            }
+            .lista-recomendaciones li strong { color: var(--ink); }
+            .recom-perfecto {
+                background: #fff; border-radius: 0.4rem; padding: 0.8rem 1rem;
+                border-left: 3px solid var(--teal); font-size: 0.92rem;
+            }
+
+            /* ======================================================= */
+            /* --- Figuras / gráficos profesionales dentro del texto --- */
+            /* ======================================================= */
+            figure.grafico-cap {
+                background: #ffffff;
+                border: 1.5px solid var(--grid-line);
+                border-radius: 0.6rem;
+                padding: 1.2rem 1.3rem 1rem;
+                margin: 1.6rem 0;
+                box-shadow: 4px 4px 0 var(--teal-soft);
+            }
+            figure.grafico-cap svg { display: block; width: 100%; height: auto; }
+            figure.grafico-cap figcaption {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 0.72rem; color: #55607a;
+                text-align: center; margin-top: 0.7rem;
+                letter-spacing: 0.02em;
+            }
+            figure.grafico-cap figcaption strong { color: var(--teal); }
+
+            /* ======================================================= */
+            /* --- Formulario general --- */
+            /* ======================================================= */
+            .formulario-cap {
+                margin-bottom: 1.8rem;
+                border: 1.5px solid var(--grid-line);
+                border-radius: 0.5rem;
+                overflow: hidden;
+                background: #fff;
+            }
+            .formulario-cap > summary {
+                cursor: pointer; list-style: none;
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 0.9rem 1.2rem;
+                background: var(--teal-soft);
+                font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+                color: var(--ink); font-size: 1rem;
+            }
+            .formulario-cap > summary::-webkit-details-marker { display: none; }
+            .formulario-cap > summary::after {
+                content: '+'; font-size: 1.3rem; color: var(--teal); font-weight: 700;
+            }
+            .formulario-cap[open] > summary::after { content: '–'; }
+            .formulario-cap > summary:hover { background: #cdeeec; }
+            .formulario-grid {
+                display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 0.9rem; padding: 1.1rem 1.2rem 1.3rem;
+            }
+            .formula-card {
+                background: #FBFAF6; border: 1px solid #E4E0D3; border-radius: 0.5rem;
+                padding: 0.8rem 1rem;
+            }
+            .formula-card .formula-nombre {
+                font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+                font-size: 0.85rem; color: var(--amber); margin-bottom: 0.35rem;
+                display: block;
+            }
+            .formula-card .formula-expr { font-size: 0.98rem; overflow-x: auto; }
+            .formula-card .formula-nota {
+                font-size: 0.78rem; color: #64748b; margin-top: 0.35rem;
+            }
+            .tab-link.form { background: #6B4C9A; }
+
 </style>
 </head>
 <body>
@@ -198,6 +391,7 @@
 <a href="#cap6" class="tab-link">CAP. 07</a>
 <a href="#cap7" class="tab-link">CAP. 08</a>
 <a href="#cap8" class="tab-link">CAP. 09</a>
+<a href="#formulario" class="tab-link form">📐 Formulario</a>
 </nav>
 <main class="contenido-principal">
 <section id="diagnostico" class="ficha ficha-diag">
@@ -205,49 +399,49 @@
   <h2 class="ficha-titulo">¿Estás listo para empezar?</h2>
   <p class="ficha-intro">Resuelve las siguientes preguntas antes de iniciar el curso. Te permitirán identificar qué conocimientos previos conviene repasar.</p>
   <div class="ficha-cuerpo">
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Cálculo diferencial: regla de la cadena" data-tip="Repasa la derivación de funciones compuestas (regla de la cadena), especialmente con logaritmos y trigonométricas anidadas.">
   <p><strong>1.</strong> Si \( f(x) = \ln(\sin(x^2)) \), entonces \( f'(x) \) es igual a:</p>
-  <ol type="A">
-    <li>\(\dfrac{\cos(x^2)}{\sin(x^2)}\)</li>
-    <li>\(\dfrac{2x \cos(x^2)}{\sin(x^2)}\)</li>
-    <li>\(\dfrac{2x \cos(x^2)}{\ln(\sin(x^2))}\)</li>
-    <li>\(\dfrac{\cos(x^2)}{x^2 \sin(x^2)}\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag1" value="A"><span class="letra">A)</span> \(\dfrac{\cos(x^2)}{\sin(x^2)}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag1" value="B"><span class="letra">B)</span> \(\dfrac{2x \cos(x^2)}{\sin(x^2)}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag1" value="C"><span class="letra">C)</span> \(\dfrac{2x \cos(x^2)}{\ln(\sin(x^2))}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag1" value="D"><span class="letra">D)</span> \(\dfrac{\cos(x^2)}{x^2 \sin(x^2)}\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Aplicando la regla de la cadena: \( f'(x) = \dfrac{1}{\sin(x^2)} \cdot \cos(x^2) \cdot 2x = \dfrac{2x \cos(x^2)}{\sin(x^2)} \).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Cálculo integral: integrales impropias" data-tip="Practica el cálculo de integrales impropias usando límites al infinito; identifica cuándo convergen o divergen.">
   <p><strong>2.</strong> El valor de la integral impropia \(\displaystyle \int_{1}^{\infty} \frac{1}{x^2} \, dx\) es:</p>
-  <ol type="A">
-    <li>\(1\)</li>
-    <li>\(2\)</li>
-    <li>\(\infty\) (diverge)</li>
-    <li>\(0\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag2" value="A"><span class="letra">A)</span> \(1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag2" value="B"><span class="letra">B)</span> \(2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag2" value="C"><span class="letra">C)</span> \(\infty\) (diverge)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag2" value="D"><span class="letra">D)</span> \(0\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> \(\displaystyle \int_{1}^{\infty} \frac{1}{x^2} \, dx = \lim_{b \to \infty} \left[ -\frac{1}{x} \right]_{1}^{b} = \lim_{b \to \infty} \left( -\frac{1}{b} + 1 \right) = 1\).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Series de Taylor/Maclaurin" data-tip="Repasa el desarrollo en series de Taylor/Maclaurin de funciones elementales (seno, coseno, exponencial).">
   <p><strong>3.</strong> En la serie de Maclaurin de \( \sin(x) \), el coeficiente del término \( x^3 \) es:</p>
-  <ol type="A">
-    <li>\(1\)</li>
-    <li>\(-\dfrac{1}{6}\)</li>
-    <li>\(0\)</li>
-    <li>\(\dfrac{1}{6}\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag3" value="A"><span class="letra">A)</span> \(1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag3" value="B"><span class="letra">B)</span> \(-\dfrac{1}{6}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag3" value="C"><span class="letra">C)</span> \(0\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag3" value="D"><span class="letra">D)</span> \(\dfrac{1}{6}\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> \( \sin(x) = x - \dfrac{x^3}{3!} + \dfrac{x^5}{5!} - \cdots \). El coeficiente de \(x^3\) es \(-\dfrac{1}{6}\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Álgebra lineal: sistemas de ecuaciones" data-tip="Refuerza la resolución de sistemas de ecuaciones lineales 2x2 (sustitución, reducción o eliminación).">
   <p><strong>4.</strong> Resuelva el sistema de ecuaciones lineales  
   \[
   \begin{cases}
@@ -256,189 +450,357 @@
   \end{cases}
   \]
   y determine el valor de \(x\).</p>
-  <ol type="A">
-    <li>\(x = 1\)</li>
-    <li>\(x = 2\)</li>
-    <li>\(x = 3\)</li>
-    <li>\(x = 4\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag4" value="A"><span class="letra">A)</span> \(x = 1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag4" value="B"><span class="letra">B)</span> \(x = 2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag4" value="C"><span class="letra">C)</span> \(x = 3\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag4" value="D"><span class="letra">D)</span> \(x = 4\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Sumando ambas ecuaciones: \( (x+y) + (2x-y) = 3+3 \Rightarrow 3x = 6 \Rightarrow x = 2 \). Luego \(y = 1\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Álgebra lineal: valores propios" data-tip="Repasa cómo obtener valores propios (eigenvalues) resolviendo la ecuación característica det(A-λI)=0.">
   <p><strong>5.</strong> Los valores propios de la matriz  
   \[
   A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}
   \]
   son:</p>
-  <ol type="A">
-    <li>\(\lambda = 0, 4\)</li>
-    <li>\(\lambda = 1, 3\)</li>
-    <li>\(\lambda = 2, 2\)</li>
-    <li>\(\lambda = -1, 5\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag5" value="A"><span class="letra">A)</span> \(\lambda = 0, 4\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag5" value="B"><span class="letra">B)</span> \(\lambda = 1, 3\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag5" value="C"><span class="letra">C)</span> \(\lambda = 2, 2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag5" value="D"><span class="letra">D)</span> \(\lambda = -1, 5\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Ecuación característica: \(\det(A - \lambda I) = (2-\lambda)^2 - 1 = 0 \Rightarrow (2-\lambda)^2 = 1 \Rightarrow 2-\lambda = \pm 1\). Por tanto \(\lambda = 1\) o \(\lambda = 3\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Cálculo multivariable: gradiente" data-tip="Repasa el cálculo de derivadas parciales y el vector gradiente de funciones de varias variables.">
   <p><strong>6.</strong> El gradiente de la función \( f(x,y) = x^2 y + e^x \sin(y) \) es:</p>
-  <ol type="A">
-    <li>\(\nabla f = (2x + e^x \sin(y), \; x^2 + e^x \cos(y))\)</li>
-    <li>\(\nabla f = (2xy + e^x \sin(y), \; x^2 + e^x \cos(y))\)</li>
-    <li>\(\nabla f = (2xy + e^x \cos(y), \; x^2 + e^x \sin(y))\)</li>
-    <li>\(\nabla f = (2x y, \; e^x \sin(y))\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag6" value="A"><span class="letra">A)</span> \(\nabla f = (2x + e^x \sin(y), \; x^2 + e^x \cos(y))\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag6" value="B"><span class="letra">B)</span> \(\nabla f = (2xy + e^x \sin(y), \; x^2 + e^x \cos(y))\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag6" value="C"><span class="letra">C)</span> \(\nabla f = (2xy + e^x \cos(y), \; x^2 + e^x \sin(y))\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag6" value="D"><span class="letra">D)</span> \(\nabla f = (2x y, \; e^x \sin(y))\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Derivada parcial respecto a \(x\): \(f_x = 2xy + e^x \sin(y)\). Derivada parcial respecto a \(y\): \(f_y = x^2 + e^x \cos(y)\). Por lo tanto \(\nabla f = (2xy + e^x \sin(y), \, x^2 + e^x \cos(y))\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Cálculo multivariable: integrales dobles" data-tip="Practica el cálculo de integrales dobles iteradas sobre regiones rectangulares.">
   <p><strong>7.</strong> El valor de la integral doble  
   \[
   \int_{0}^{1} \int_{0}^{2} xy \, dx \, dy
   \]
   es:</p>
-  <ol type="A">
-    <li>\(2\)</li>
-    <li>\(1\)</li>
-    <li>\(\frac{1}{2}\)</li>
-    <li>\(4\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag7" value="A"><span class="letra">A)</span> \(2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag7" value="B"><span class="letra">B)</span> \(1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag7" value="C"><span class="letra">C)</span> \(\frac{1}{2}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag7" value="D"><span class="letra">D)</span> \(4\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Primero integramos respecto a \(x\): \(\int_0^2 xy \, dx = y \left[ \frac{x^2}{2} \right]_0^2 = 2y\). Luego \(\int_0^1 2y \, dy = [y^2]_0^1 = 1\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="B" data-tema="Lógica proposicional (De Morgan)" data-tip="Repasa las leyes de De Morgan y la negación de proposiciones compuestas.">
   <p><strong>8.</strong> Según las leyes de De Morgan, la negación de la proposición compuesta \(P \land Q\) es lógicamente equivalente a:</p>
-  <ol type="A">
-    <li>\(\neg P \land \neg Q\)</li>
-    <li>\(\neg P \lor \neg Q\)</li>
-    <li>\(P \lor Q\)</li>
-    <li>\(\neg (P \lor Q)\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag8" value="A"><span class="letra">A)</span> \(\neg P \land \neg Q\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag8" value="B"><span class="letra">B)</span> \(\neg P \lor \neg Q\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag8" value="C"><span class="letra">C)</span> \(P \lor Q\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag8" value="D"><span class="letra">D)</span> \(\neg (P \lor Q)\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> La ley de De Morgan establece que \(\neg(P \land Q) \equiv \neg P \lor \neg Q\).<br><strong>Respuesta correcta: B</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Programación en Python/NumPy" data-tip="Familiarízate con las funciones básicas de NumPy para estadística descriptiva (mean, median, std).">
   <p><strong>9.</strong> En Python, con la librería NumPy, la función más directa para calcular la media aritmética de un arreglo <code>arr</code> es:</p>
-  <ol type="A">
-    <li><code>np.mean(arr)</code></li>
-    <li><code>np.median(arr)</code></li>
-    <li><code>np.std(arr)</code></li>
-    <li><code>np.average(arr)</code></li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag9" value="A"><span class="letra">A)</span> <code>np.mean(arr)</code></label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag9" value="B"><span class="letra">B)</span> <code>np.median(arr)</code></label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag9" value="C"><span class="letra">C)</span> <code>np.std(arr)</code></label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag9" value="D"><span class="letra">D)</span> <code>np.average(arr)</code></label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> <code>np.mean(arr)</code> calcula la media aritmética de los elementos del arreglo. <code>np.average</code> también puede calcular media ponderada, pero la forma directa es <code>np.mean</code>.<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Cifras significativas" data-tip="Repasa las reglas de cifras significativas en operaciones de multiplicación y división.">
   <p><strong>10.</strong> Se multiplican dos mediciones experimentales: \(2.5\) (2 cifras significativas) y \(3.21\) (3 cifras significativas). El resultado debe expresarse con el número correcto de cifras significativas, que es:</p>
-  <ol type="A">
-    <li>\(8.0\)</li>
-    <li>\(8.025\)</li>
-    <li>\(8.02\)</li>
-    <li>\(8\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag10" value="A"><span class="letra">A)</span> \(8.0\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag10" value="B"><span class="letra">B)</span> \(8.025\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag10" value="C"><span class="letra">C)</span> \(8.02\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag10" value="D"><span class="letra">D)</span> \(8\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> En multiplicación, el resultado debe tener el mismo número de cifras significativas que el factor con menos: \(2.5\) tiene 2, \(3.21\) tiene 3. Producto exacto: \(2.5 \times 3.21 = 8.025\). Con 2 cifras significativas se redondea a \(8.0\) (el cero es significativo).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Propagación de incertidumbres" data-tip="Repasa la propagación de errores en cuadratura para sumas y restas de mediciones independientes.">
   <p><strong>11.</strong> En un experimento se miden \(x = 5.0 \pm 0.2\) y \(y = 3.0 \pm 0.1\), con incertidumbres independientes. La incertidumbre absoluta de la suma \(z = x + y\) se calcula como:</p>
-  <ol type="A">
-    <li>\(\sqrt{(0.2)^2 + (0.1)^2}\)</li>
-    <li>\(0.2 + 0.1\)</li>
-    <li>\(0.2 - 0.1\)</li>
-    <li>\(\sqrt{0.2 \cdot 0.1}\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag11" value="A"><span class="letra">A)</span> \(\sqrt{(0.2)^2 + (0.1)^2}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag11" value="B"><span class="letra">B)</span> \(0.2 + 0.1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag11" value="C"><span class="letra">C)</span> \(0.2 - 0.1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag11" value="D"><span class="letra">D)</span> \(\sqrt{0.2 \cdot 0.1}\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Para suma de mediciones independientes, las incertidumbres absolutas se propagan en cuadratura: \(\sigma_z = \sqrt{\sigma_x^2 + \sigma_y^2} = \sqrt{0.2^2 + 0.1^2}\).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Lógica: cuantificadores" data-tip="Repasa la negación de proposiciones con cuantificadores universales y existenciales.">
   <p><strong>12.</strong> La negación lógica de la proposición cuantificada \(\forall x, \, P(x)\) es:</p>
-  <ol type="A">
-    <li>\(\exists x, \, \neg P(x)\)</li>
-    <li>\(\forall x, \, \neg P(x)\)</li>
-    <li>\(\exists x, \, P(x)\)</li>
-    <li>\(\neg \exists x, \, P(x)\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag12" value="A"><span class="letra">A)</span> \(\exists x, \, \neg P(x)\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag12" value="B"><span class="letra">B)</span> \(\forall x, \, \neg P(x)\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag12" value="C"><span class="letra">C)</span> \(\exists x, \, P(x)\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag12" value="D"><span class="letra">D)</span> \(\neg \exists x, \, P(x)\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> La negación de “para todo \(x\), \(P(x)\) es verdadero” es “existe al menos un \(x\) tal que \(P(x)\) es falso”. Formalmente: \(\neg(\forall x P(x)) \equiv \exists x \neg P(x)\).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Álgebra lineal: matriz inversa" data-tip="Repasa el cálculo de la matriz inversa 2x2 mediante el determinante y la matriz adjunta.">
   <p><strong>13.</strong> Dada la matriz  
   \[
   A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix},
   \]
   su inversa \(A^{-1}\) es:</p>
-  <ol type="A">
-    <li>\(\begin{pmatrix} -2 & 1 \\ 1.5 & -0.5 \end{pmatrix}\)</li>
-    <li>\(\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}\)</li>
-    <li>\(\begin{pmatrix} 2 & -1 \\ -1.5 & 0.5 \end{pmatrix}\)</li>
-    <li>\(\begin{pmatrix} -1 & 2 \\ 1.5 & -0.5 \end{pmatrix}\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag13" value="A"><span class="letra">A)</span> \(\begin{pmatrix} -2 & 1 \\ 1.5 & -0.5 \end{pmatrix}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag13" value="B"><span class="letra">B)</span> \(\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag13" value="C"><span class="letra">C)</span> \(\begin{pmatrix} 2 & -1 \\ -1.5 & 0.5 \end{pmatrix}\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag13" value="D"><span class="letra">D)</span> \(\begin{pmatrix} -1 & 2 \\ 1.5 & -0.5 \end{pmatrix}\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> \(\det(A) = 1\cdot4 - 2\cdot3 = -2\). La adjunta es \(\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}\). Entonces \(A^{-1} = \frac{1}{-2} \text{adj}(A) = \begin{pmatrix} -2 & 1 \\ 1.5 & -0.5 \end{pmatrix}\).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="C" data-tema="Cálculo diferencial: optimización" data-tip="Repasa el criterio de la segunda derivada para clasificar máximos y mínimos locales.">
   <p><strong>14.</strong> La función \(f(x) = x^3 - 3x\) tiene un máximo local en:</p>
-  <ol type="A">
-    <li>\(x = 1\)</li>
-    <li>\(x = 0\)</li>
-    <li>\(x = -1\)</li>
-    <li>No tiene máximo local</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag14" value="A"><span class="letra">A)</span> \(x = 1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag14" value="B"><span class="letra">B)</span> \(x = 0\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag14" value="C"><span class="letra">C)</span> \(x = -1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag14" value="D"><span class="letra">D)</span> No tiene máximo local</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> \(f'(x) = 3x^2 - 3 = 3(x^2-1)\). Puntos críticos en \(x = \pm 1\). Segunda derivada \(f''(x) = 6x\). En \(x=-1\), \(f''(-1) = -6 < 0\) → máximo local. En \(x=1\), \(f''(1)=6>0\) → mínimo local.<br><strong>Respuesta correcta: C</strong></p>
   </div>
 </div>
 
-<div class="pregunta-diagnostico">
+<div class="pregunta-diagnostico" data-correcta="A" data-tema="Series: convergencia" data-tip="Repasa el criterio de convergencia de series geométricas: |razón| < 1.">
   <p><strong>15.</strong> La serie geométrica  
   \[
   \sum_{n=0}^{\infty} \left( \frac{x}{2} \right)^n
   \]
   converge si y solo si:</p>
-  <ol type="A">
-    <li>\(|x| < 2\)</li>
-    <li>\(|x| < 1\)</li>
-    <li>\(x < 2\)</li>
-    <li>\(x > 2\)</li>
-  </ol>
+  <ul class="quiz-opciones">
+    <li class="quiz-opcion"><label><input type="radio" name="diag15" value="A"><span class="letra">A)</span> \(|x| < 2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag15" value="B"><span class="letra">B)</span> \(|x| < 1\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag15" value="C"><span class="letra">C)</span> \(x < 2\)</label></li>
+    <li class="quiz-opcion"><label><input type="radio" name="diag15" value="D"><span class="letra">D)</span> \(x > 2\)</label></li>
+  </ul>
   <button class="btn-solucion">Mostrar solución</button>
   <div class="solucion" style="display:none;">
     <p><strong>Solución:</strong> Una serie geométrica \(\sum r^n\) converge cuando \(|r| < 1\). Aquí \(r = x/2\), por lo que \(|x/2| < 1 \Rightarrow |x| < 2\).<br><strong>Respuesta correcta: A</strong></p>
   </div>
 </div>
+
+<div class="panel-calificar">
+  <button class="btn-calificar" id="btnCalificarDiag">Calificar evaluación</button>
+  <p class="aviso-incompleto" id="avisoIncompletoDiag">⚠ Responde todas las preguntas antes de calificar (faltan algunas por contestar).</p>
+</div>
+
+<div class="panel-resultado" id="panelResultadoDiag">
+  <div class="resultado-etiqueta">Tu calificación</div>
+  <div class="resultado-numero" id="resultadoNumeroDiag">0/15</div>
+  <div class="resultado-etiqueta" id="resultadoPorcentajeDiag">0%</div>
+  <div class="barra-progreso"><div class="barra-progreso-fill" id="barraProgresoDiag"></div></div>
+  <p class="resultado-mensaje" id="resultadoMensajeDiag"></p>
+  <button class="btn-reintentar" id="btnReintentarDiag">🔄 Reiniciar evaluación</button>
+</div>
+
+<div class="panel-recomendaciones" id="panelRecomendacionesDiag">
+  <h4>📚 Recomendaciones de estudio personalizadas</h4>
+  <div id="contenidoRecomendacionesDiag"></div>
+</div>
+
   </div>
 </section>
+
+<script>
+(function() {
+  const btnCalificar = document.getElementById('btnCalificarDiag');
+  const aviso = document.getElementById('avisoIncompletoDiag');
+  const panelResultado = document.getElementById('panelResultadoDiag');
+  const panelRecomendaciones = document.getElementById('panelRecomendacionesDiag');
+  const preguntas = Array.from(document.querySelectorAll('.pregunta-diagnostico'));
+
+  // Al elegir una opción, resaltarla visualmente
+  preguntas.forEach(function(pregunta) {
+    const opciones = pregunta.querySelectorAll('.quiz-opcion');
+    opciones.forEach(function(op) {
+      op.addEventListener('click', function() {
+        const radio = op.querySelector('input[type="radio"]');
+        if (pregunta.classList.contains('corregida')) return;
+        radio.checked = true;
+        opciones.forEach(o => o.classList.remove('seleccionada'));
+        op.classList.add('seleccionada');
+      });
+    });
+  });
+
+  function calificar() {
+    // Verificar que todas estén respondidas
+    let faltan = 0;
+    preguntas.forEach(function(p) {
+      const marcada = p.querySelector('input[type="radio"]:checked');
+      if (!marcada) faltan++;
+    });
+    if (faltan > 0) {
+      aviso.classList.add('mostrar');
+      return;
+    }
+    aviso.classList.remove('mostrar');
+
+    let correctas = 0;
+    const temasIncorrectos = [];
+
+    preguntas.forEach(function(p) {
+      const correcta = p.getAttribute('data-correcta');
+      const marcada = p.querySelector('input[type="radio"]:checked');
+      const valor = marcada.value;
+      const opciones = p.querySelectorAll('.quiz-opcion');
+
+      p.classList.add('corregida');
+
+      opciones.forEach(function(op) {
+        const radio = op.querySelector('input[type="radio"]');
+        if (radio.value === correcta) {
+          op.classList.add('correcta-marca');
+        }
+        if (radio.value === valor && valor !== correcta) {
+          op.classList.add('incorrecta-marca');
+        }
+      });
+
+      const badge = document.createElement('span');
+      badge.classList.add('badge-estado');
+      if (valor === correcta) {
+        correctas++;
+        badge.classList.add('ok');
+        badge.textContent = '✓ Correcta';
+      } else {
+        badge.classList.add('no');
+        badge.textContent = '✗ Incorrecta';
+        temasIncorrectos.push({ tema: p.getAttribute('data-tema'), tip: p.getAttribute('data-tip') });
+      }
+      p.appendChild(badge);
+    });
+
+    const total = preguntas.length;
+    const porcentaje = Math.round((correctas / total) * 100);
+
+    const numeroEl = document.getElementById('resultadoNumeroDiag');
+    const porcentajeEl = document.getElementById('resultadoPorcentajeDiag');
+    const mensajeEl = document.getElementById('resultadoMensajeDiag');
+    const barraEl = document.getElementById('barraProgresoDiag');
+
+    numeroEl.textContent = correctas + '/' + total;
+    porcentajeEl.textContent = porcentaje + '% de aciertos';
+    barraEl.style.width = porcentaje + '%';
+
+    let nivel, color, mensaje;
+    if (correctas >= 13) {
+      nivel = 'nivel-alto'; color = '#146C6B';
+      mensaje = 'Excelente preparación previa. Tienes una base sólida en los conocimientos requeridos para el curso; puedes avanzar con confianza por los capítulos.';
+    } else if (correctas >= 10) {
+      nivel = 'nivel-alto'; color = '#146C6B';
+      mensaje = 'Buena base general. Repasa los temas puntuales indicados abajo antes de avanzar en el curso para evitar vacíos.';
+    } else if (correctas >= 6) {
+      nivel = 'nivel-medio'; color = '#D98E04';
+      mensaje = 'Preparación media. Se recomienda repasar con calma los temas señalados antes de continuar, ya que son prerequisitos importantes del curso.';
+    } else {
+      nivel = 'nivel-bajo'; color = '#B3261E';
+      mensaje = 'Se detectaron vacíos importantes en los prerrequisitos. Se recomienda un repaso extenso de los temas señalados antes de iniciar el curso, para aprovecharlo al máximo.';
+    }
+    numeroEl.className = 'resultado-numero ' + nivel;
+    barraEl.style.background = color;
+    mensajeEl.textContent = mensaje;
+
+    panelResultado.classList.add('mostrar');
+
+    // Recomendaciones
+    const contenedorRecom = document.getElementById('contenidoRecomendacionesDiag');
+    contenedorRecom.innerHTML = '';
+    if (temasIncorrectos.length === 0) {
+      contenedorRecom.innerHTML = '<p class="recom-perfecto">🎉 ¡Respondiste correctamente todas las preguntas! No se identificaron vacíos de conocimiento. Estás listo(a) para comenzar el curso directamente en el Capítulo 1.</p>';
+    } else {
+      const lista = document.createElement('ul');
+      lista.className = 'lista-recomendaciones';
+      const vistos = new Set();
+      temasIncorrectos.forEach(function(t) {
+        if (vistos.has(t.tema)) return;
+        vistos.add(t.tema);
+        const li = document.createElement('li');
+        li.innerHTML = '<strong>' + t.tema + ':</strong> ' + t.tip;
+        lista.appendChild(li);
+      });
+      contenedorRecom.appendChild(lista);
+    }
+    panelRecomendaciones.classList.add('mostrar');
+
+    btnCalificar.style.display = 'none';
+
+    panelResultado.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  btnCalificar.addEventListener('click', calificar);
+
+  document.getElementById('btnReintentarDiag').addEventListener('click', function() {
+    preguntas.forEach(function(p) {
+      p.classList.remove('corregida');
+      const badge = p.querySelector('.badge-estado');
+      if (badge) badge.remove();
+      p.querySelectorAll('.quiz-opcion').forEach(function(op) {
+        op.classList.remove('seleccionada', 'correcta-marca', 'incorrecta-marca');
+      });
+      p.querySelectorAll('input[type="radio"]').forEach(function(r) { r.checked = false; });
+    });
+    panelResultado.classList.remove('mostrar');
+    panelRecomendaciones.classList.remove('mostrar');
+    aviso.classList.remove('mostrar');
+    btnCalificar.style.display = 'inline-block';
+    document.getElementById('diagnostico').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
 <section id="cap0" class="ficha ficha-cap">
   <div class="ficha-eyebrow">Capítulo 01</div>
   <h2 class="ficha-titulo">Estadística Descriptiva</h2>
@@ -1080,6 +1442,46 @@
         <p><strong>Ejemplo 1.1 (Espacio muestral y eventos).</strong> Considere el experimento de lanzar dos monedas y observar el resultado de cada una (Cara: C, Sello: X). El espacio muestral es \( S = \{CC, CX, XC, XX\} \). El evento \( A \) = "obtener exactamente una cara" es \( A = \{CX, XC\} \). El evento \( B \) = "obtener al menos una cara" es \( B = \{CC, CX, XC\} \). El evento \( C \) = "obtener dos sellos" es \( C = \{XX\} \).</p>
         <p><strong>Ejemplo 1.2 (Evento en un experimento físico).</strong> Se mide la energía de un fotón emitido por una fuente. El espacio muestral es todos los valores reales positivos \( S = (0, \infty) \). El evento "la energía está entre 1 keV y 2 keV" se escribe como \( E = [1, 2] \) (o \( (1,2) \) según la precisión).</p>
 
+        <figure class="grafico-cap">
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">
+            <rect x="20" y="16" width="600" height="264" rx="14" fill="#F7F6F1" stroke="#1D2B4F" stroke-width="2"/>
+            <text x="40" y="46" font-size="15" fill="#1D2B4F" font-weight="700">S = {CC, CX, XC, XX}   (16 resultados equiprobables en 2 lanzamientos)</text>
+
+            <!-- Ejes de la cuadrícula: moneda 1 (filas) x moneda 2 (columnas) -->
+            <text x="150" y="80" font-size="12" fill="#55607a" text-anchor="middle">Moneda 2 = C</text>
+            <text x="330" y="80" font-size="12" fill="#55607a" text-anchor="middle">Moneda 2 = X</text>
+            <text x="70"  y="140" font-size="12" fill="#55607a" text-anchor="middle" transform="rotate(-90 70 140)">Moneda 1 = C</text>
+            <text x="70"  y="230" font-size="12" fill="#55607a" text-anchor="middle" transform="rotate(-90 70 230)">Moneda 1 = X</text>
+
+            <!-- CC: no pertenece a A -->
+            <rect x="100" y="100" width="150" height="80" rx="10" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="2"/>
+            <text x="175" y="148" text-anchor="middle" font-size="18" font-weight="700" fill="#1D2B4F">CC</text>
+
+            <!-- CX: pertenece a A -->
+            <rect x="280" y="100" width="150" height="80" rx="10" fill="#FBEBCB" stroke="#D98E04" stroke-width="2.5"/>
+            <text x="355" y="148" text-anchor="middle" font-size="18" font-weight="700" fill="#8a5c00">CX</text>
+
+            <!-- XC: pertenece a A -->
+            <rect x="100" y="190" width="150" height="80" rx="10" fill="#FBEBCB" stroke="#D98E04" stroke-width="2.5"/>
+            <text x="175" y="238" text-anchor="middle" font-size="18" font-weight="700" fill="#8a5c00">XC</text>
+
+            <!-- XX: no pertenece a A -->
+            <rect x="280" y="190" width="150" height="80" rx="10" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="2"/>
+            <text x="355" y="238" text-anchor="middle" font-size="18" font-weight="700" fill="#1D2B4F">XX</text>
+
+            <!-- Leyenda -->
+            <rect x="470" y="105" width="18" height="18" rx="4" fill="#FBEBCB" stroke="#D98E04" stroke-width="1.5"/>
+            <text x="495" y="119" font-size="12" fill="#334155">Evento A: exactamente</text>
+            <text x="495" y="134" font-size="12" fill="#334155">una cara" = {CX, XC}</text>
+            <text x="495" y="152" font-size="12" fill="#334155">P(A) = 2/4 = 0.5</text>
+
+            <rect x="470" y="185" width="18" height="18" rx="4" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="1.5"/>
+            <text x="495" y="199" font-size="12" fill="#334155">Resultados fuera</text>
+            <text x="495" y="214" font-size="12" fill="#334155">de A: {CC, XX}</text>
+          </svg>
+          <figcaption><strong>Figura 1.1.</strong> Espacio muestral \(S\) del lanzamiento de dos monedas organizado en cuadrícula. El evento \(A=\{CX,XC\}\) se resalta en ámbar.</figcaption>
+        </figure>
+
         <h3>2. Técnicas de Conteo: Permutaciones y Combinaciones</h3>
         <p>
             Para calcular probabilidades en espacios muestrales finitos y equiprobables, es esencial contar el número de resultados favorables y el total de resultados posibles. Las técnicas de conteo más importantes son:
@@ -1118,7 +1520,70 @@
             </li>
         </ul>
         <p><strong>Ejemplo 3.1 (Probabilidad clásica).</strong> Si \( S \) es finito y todos los resultados son igualmente probables, entonces \( P(A) = \frac{|A|}{|S|} \), donde \( |A| \) es el número de elementos de \( A \). Lanzar un dado justo: \( S = \{1,2,3,4,5,6\} \). La probabilidad de obtener un número par \( A = \{2,4,6\} \) es \( P(A) = 3/6 = 1/2 \).</p>
+
+        <figure class="grafico-cap">
+          <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">
+            <text x="280" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1D2B4F">Distribución de probabilidad — dado justo, P(x) = 1/6</text>
+            <!-- Ejes -->
+            <line x1="60" y1="210" x2="520" y2="210" stroke="#1D2B4F" stroke-width="1.5"/>
+            <line x1="60" y1="50" x2="60" y2="210" stroke="#1D2B4F" stroke-width="1.5"/>
+            <text x="30" y="55" font-size="11" fill="#55607a">1/6</text>
+            <line x1="55" y1="50" x2="60" y2="50" stroke="#1D2B4F" stroke-width="1"/>
+            <text x="30" y="213" font-size="11" fill="#55607a">0</text>
+
+            <!-- 6 barras iguales, x=2,4,6 resaltadas (evento A = par) -->
+            <g>
+              <rect x="80"  y="50" width="55" height="160" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="1.5"/>
+              <text x="107" y="230" text-anchor="middle" font-size="12" fill="#334155">x=1</text>
+
+              <rect x="150" y="50" width="55" height="160" fill="#FBEBCB" stroke="#D98E04" stroke-width="2"/>
+              <text x="177" y="230" text-anchor="middle" font-size="12" fill="#334155">x=2</text>
+
+              <rect x="220" y="50" width="55" height="160" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="1.5"/>
+              <text x="247" y="230" text-anchor="middle" font-size="12" fill="#334155">x=3</text>
+
+              <rect x="290" y="50" width="55" height="160" fill="#FBEBCB" stroke="#D98E04" stroke-width="2"/>
+              <text x="317" y="230" text-anchor="middle" font-size="12" fill="#334155">x=4</text>
+
+              <rect x="360" y="50" width="55" height="160" fill="#EDEAE0" stroke="#1D2B4F" stroke-width="1.5"/>
+              <text x="387" y="230" text-anchor="middle" font-size="12" fill="#334155">x=5</text>
+
+              <rect x="430" y="50" width="55" height="160" fill="#FBEBCB" stroke="#D98E04" stroke-width="2"/>
+              <text x="457" y="230" text-anchor="middle" font-size="12" fill="#334155">x=6</text>
+            </g>
+
+            <!-- Leyenda -->
+            <rect x="440" y="55" width="14" height="14" rx="3" fill="#FBEBCB" stroke="#D98E04" stroke-width="1.5"/>
+            <text x="0" y="0" font-size="1"></text>
+          </svg>
+          <figcaption><strong>Figura 1.2.</strong> Función de probabilidad uniforme del dado; en ámbar el evento \(A=\{2,4,6\}\), con \(P(A)=3/6=0.5\).</figcaption>
+        </figure>
+
         <p><strong>Ejemplo 3.2 (Probabilidad de la unión).</strong> En una clase de 30 estudiantes, 15 estudian Física, 12 estudian Matemáticas y 6 estudian ambas. Se selecciona un estudiante al azar. Probabilidad de que estudie Física o Matemáticas: \( P(F \cup M) = P(F) + P(M) - P(F \cap M) = \frac{15}{30} + \frac{12}{30} - \frac{6}{30} = \frac{21}{30} = 0.7 \).</p>
+
+        <figure class="grafico-cap">
+          <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">
+            <text x="280" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#1D2B4F">Diagrama de Venn — P(F ∪ M) = P(F) + P(M) − P(F ∩ M)</text>
+            <!-- Rectángulo espacio muestral -->
+            <rect x="40" y="45" width="480" height="220" rx="12" fill="#F7F6F1" stroke="#1D2B4F" stroke-width="2"/>
+            <text x="60" y="68" font-size="12" fill="#55607a">S (30 estudiantes)</text>
+
+            <!-- Círculo F -->
+            <circle cx="220" cy="165" r="95" fill="#DCF3F2" fill-opacity="0.75" stroke="#146C6B" stroke-width="2"/>
+            <!-- Círculo M -->
+            <circle cx="340" cy="165" r="95" fill="#FBEBCB" fill-opacity="0.75" stroke="#D98E04" stroke-width="2"/>
+
+            <text x="170" y="130" font-size="16" font-weight="700" fill="#146C6B">F</text>
+            <text x="390" y="130" font-size="16" font-weight="700" fill="#8a5c00">M</text>
+
+            <text x="170" y="175" text-anchor="middle" font-size="14" fill="#0f4b4a">9</text>
+            <text x="280" y="175" text-anchor="middle" font-size="14" fill="#1D2B4F" font-weight="700">6</text>
+            <text x="390" y="175" text-anchor="middle" font-size="14" fill="#7a5000">6</text>
+
+            <text x="280" y="292" text-anchor="middle" font-size="12" fill="#334155">P(F)=15/30,&#160; P(M)=12/30,&#160; P(F∩M)=6/30&#160; ⇒&#160; P(F∪M)=21/30=0.7</text>
+          </svg>
+          <figcaption><strong>Figura 1.3.</strong> Diagrama de Venn del Ejemplo 3.2: intersección de estudiantes que cursan Física (F) y Matemáticas (M).</figcaption>
+        </figure>
 
         <h3>4. Probabilidad Condicional e Independencia de Eventos</h3>
         <p>
@@ -1165,6 +1630,50 @@
         = \frac{0.95 \times 0.01}{0.95 \times 0.01 + 0.10 \times 0.99} \approx \frac{0.0095}{0.0095+0.099} = \frac{0.0095}{0.1085} \approx 0.0876.
         \]
         <p>Es decir, a pesar de dar positivo, la probabilidad de estar realmente enfermo es solo del 8.76%, debido a la baja prevalencia.</p>
+
+        <figure class="grafico-cap">
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace">
+            <text x="320" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#1D2B4F">Árbol de probabilidad — Teorema de Bayes (Ejemplo 5.1)</text>
+
+            <!-- Nodo raíz -->
+            <circle cx="60" cy="150" r="6" fill="#1D2B4F"/>
+            <text x="30" y="145" font-size="11" fill="#334155" text-anchor="middle">Persona</text>
+
+            <!-- Ramas nivel 1: E y Ec -->
+            <line x1="60" y1="150" x2="230" y2="70"  stroke="#146C6B" stroke-width="2"/>
+            <line x1="60" y1="150" x2="230" y2="230" stroke="#D98E04" stroke-width="2"/>
+            <text x="130" y="98"  font-size="12" fill="#146C6B">P(E) = 0.01</text>
+            <text x="130" y="212" font-size="12" fill="#8a5c00">P(Eᶜ) = 0.99</text>
+
+            <circle cx="230" cy="70"  r="5" fill="#146C6B"/>
+            <text x="240" y="66" font-size="12" fill="#146C6B" font-weight="700">E (enfermo)</text>
+            <circle cx="230" cy="230" r="5" fill="#D98E04"/>
+            <text x="240" y="226" font-size="12" fill="#8a5c00" font-weight="700">Eᶜ (sano)</text>
+
+            <!-- Ramas nivel 2 desde E -->
+            <line x1="230" y1="70" x2="420" y2="30"  stroke="#146C6B" stroke-width="1.5"/>
+            <line x1="230" y1="70" x2="420" y2="110" stroke="#146C6B" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="300" y="38" font-size="11" fill="#0f4b4a">P(T⁺|E)=0.95</text>
+            <text x="300" y="105" font-size="11" fill="#7c8a9a">P(T⁻|E)=0.05</text>
+            <text x="430" y="34" font-size="12" fill="#0f4b4a" font-weight="700">T⁺</text>
+            <text x="430" y="114" font-size="12" fill="#94a3b8">T⁻</text>
+
+            <!-- Ramas nivel 2 desde Ec -->
+            <line x1="230" y1="230" x2="420" y2="190" stroke="#D98E04" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="230" y1="230" x2="420" y2="270" stroke="#D98E04" stroke-width="1.5"/>
+            <text x="300" y="198" font-size="11" fill="#94a3b8">P(T⁺|Eᶜ)=0.10</text>
+            <text x="300" y="266" font-size="11" fill="#7a5000">P(T⁻|Eᶜ)=0.90</text>
+            <text x="430" y="194" font-size="12" fill="#94a3b8">T⁺</text>
+            <text x="430" y="274" font-size="12" fill="#7a5000" font-weight="700">T⁻</text>
+
+            <!-- Resultado final resaltado -->
+            <rect x="460" y="12" width="170" height="46" rx="8" fill="#DCF3F2" stroke="#146C6B" stroke-width="1.5"/>
+            <text x="545" y="30" text-anchor="middle" font-size="11" fill="#0f4b4a" font-weight="700">Rama de interés: E ∩ T⁺</text>
+            <text x="545" y="46" text-anchor="middle" font-size="11" fill="#0f4b4a">P(E|T⁺) ≈ 0.0876</text>
+          </svg>
+          <figcaption><strong>Figura 1.4.</strong> Diagrama de árbol del Ejemplo 5.1: solo la rama \(E \cap T^+\) (resaltada) interesa para aplicar Bayes, aun cuando el camino "sano y falso positivo" \((E^c \cap T^+)\) también conduce a un resultado positivo.</figcaption>
+        </figure>
+
         <p><strong>Ejemplo 5.2 (Probabilidad total en física experimental).</strong> En un laboratorio, el 30% de las mediciones se realizan con un detector de alta precisión (A) y el 70% con uno estándar (B). El detector A tiene una tasa de error del 1%, mientras que el B tiene una tasa de error del 5%. Si se observa una medición y se registra un error, ¿cuál es la probabilidad de que la medición provenga del detector A? Sea \( E \) = “error”. \( P(A)=0.3 \), \( P(B)=0.7 \), \( P(E|A)=0.01 \), \( P(E|B)=0.05 \). Primero, \( P(E) = P(E|A)P(A) + P(E|B)P(B) = 0.01(0.3) + 0.05(0.7) = 0.003 + 0.035 = 0.038 \). Luego, \( P(A|E) = \frac{P(E|A)P(A)}{P(E)} = \frac{0.01 \times 0.3}{0.038} \approx 0.0789 \).</p>
     </section>
 
@@ -4876,6 +5385,133 @@
 </section>
   </div>
 </section>
+
+<!-- ============================================= -->
+<!-- FORMULARIO GENERAL DE LA ASIGNATURA           -->
+<!-- ============================================= -->
+<section id="formulario" class="ficha ficha-cap">
+  <h2>📐 Formulario General</h2>
+  <p>Compendio de referencia rápida con las fórmulas fundamentales presentes a lo largo de todos los capítulos del curso. Haz clic en cada capítulo para desplegar sus fórmulas.</p>
+
+  <details class="formulario-cap" open>
+    <summary>Cap. 0 — Estadística Descriptiva</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Media muestral</span><div class="formula-expr">\( \bar{x} = \dfrac{1}{n}\sum_{i=1}^{n} x_i \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Media para datos agrupados</span><div class="formula-expr">\( \bar{x} = \dfrac{\sum f_i x_i}{\sum f_i} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Rango</span><div class="formula-expr">\( R = x_{\max} - x_{\min} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Rango intercuartílico</span><div class="formula-expr">\( RIC = Q_3 - Q_1 \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Varianza muestral</span><div class="formula-expr">\( s^2 = \dfrac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2 \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Desviación estándar</span><div class="formula-expr">\( s = \sqrt{s^2} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Coeficiente de variación</span><div class="formula-expr">\( CV = \dfrac{s}{\bar{x}} \times 100\% \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Regla de Sturges</span><div class="formula-expr">\( k \approx 1 + 3.322 \log_{10} n \)</div><div class="formula-nota">Número de clases para agrupar datos</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 1 — Teoría de la Probabilidad</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Permutaciones</span><div class="formula-expr">\( P(n,r) = \dfrac{n!}{(n-r)!} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Combinaciones</span><div class="formula-expr">\( C(n,r) = \binom{n}{r} = \dfrac{n!}{r!(n-r)!} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Probabilidad clásica</span><div class="formula-expr">\( P(A) = \dfrac{|A|}{|S|} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Regla de la adición</span><div class="formula-expr">\( P(A\cup B) = P(A)+P(B)-P(A\cap B) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Complemento</span><div class="formula-expr">\( P(A^c) = 1-P(A) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Probabilidad condicional</span><div class="formula-expr">\( P(A|B) = \dfrac{P(A\cap B)}{P(B)} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Independencia</span><div class="formula-expr">\( P(A\cap B) = P(A)P(B) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Regla de la multiplicación</span><div class="formula-expr">\( P(A\cap B) = P(A)P(B|A) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Probabilidad total</span><div class="formula-expr">\( P(A) = \sum_{i=1}^{n} P(A|B_i)P(B_i) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Teorema de Bayes</span><div class="formula-expr">\( P(B_k|A) = \dfrac{P(A|B_k)P(B_k)}{\sum_i P(A|B_i)P(B_i)} \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 2 — Variables Aleatorias</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Función masa de probabilidad</span><div class="formula-expr">\( p(x) = P(X=x) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Función de distribución acumulada</span><div class="formula-expr">\( F(x) = P(X \le x) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Probabilidad continua</span><div class="formula-expr">\( P(a\le X\le b) = \displaystyle\int_a^b f(x)\,dx \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Valor esperado (discreta)</span><div class="formula-expr">\( E[X] = \sum_x x\,p(x) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Valor esperado (continua)</span><div class="formula-expr">\( E[X] = \displaystyle\int_{-\infty}^{\infty} x f(x)\,dx \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Varianza</span><div class="formula-expr">\( \mathrm{Var}(X) = E[X^2]-(E[X])^2 \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Covarianza</span><div class="formula-expr">\( \mathrm{Cov}(X,Y) = E[XY]-E[X]E[Y] \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Coeficiente de correlación</span><div class="formula-expr">\( \rho = \dfrac{\mathrm{Cov}(X,Y)}{\sigma_X \sigma_Y} \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 3 — Distribuciones Notables</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Binomial</span><div class="formula-expr">\( P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} \)</div><div class="formula-nota">\(E[X]=np,\; \mathrm{Var}(X)=np(1-p)\)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Poisson</span><div class="formula-expr">\( P(X=k) = \dfrac{e^{-\lambda}\lambda^k}{k!} \)</div><div class="formula-nota">\(E[X]=\mathrm{Var}(X)=\lambda\)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Geométrica</span><div class="formula-expr">\( P(X=k) = (1-p)^{k-1}p \)</div><div class="formula-nota">\(E[X]=1/p\)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Uniforme continua</span><div class="formula-expr">\( f(x) = \dfrac{1}{b-a},\;\; a\le x\le b \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Exponencial</span><div class="formula-expr">\( f(x) = \lambda e^{-\lambda x},\;\; x\ge 0 \)</div><div class="formula-nota">\(E[X]=1/\lambda\)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Normal</span><div class="formula-expr">\( f(x) = \dfrac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Teorema Central del Límite</span><div class="formula-expr">\( \bar{X} \approx N\!\left(\mu, \dfrac{\sigma^2}{n}\right) \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 4 — Distribuciones Muestrales</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Media muestral</span><div class="formula-expr">\( \bar{X} = \dfrac{1}{n}\sum_{i=1}^{n} X_i \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Esperanza y varianza de \(\bar{X}\)</span><div class="formula-expr">\( E(\bar{X})=\mu,\quad \mathrm{Var}(\bar{X})=\dfrac{\sigma^2}{n} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Estadístico Z</span><div class="formula-expr">\( Z = \dfrac{\bar{X}-\mu}{\sigma/\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Estadístico t</span><div class="formula-expr">\( T = \dfrac{\bar{X}-\mu}{S/\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Proporción muestral</span><div class="formula-expr">\( \hat{p} = X/n,\quad \mathrm{Var}(\hat{p}) = \dfrac{p(1-p)}{n} \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 5 — Estimación (Intervalos de Confianza)</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">IC para μ (σ conocida)</span><div class="formula-expr">\( \bar{x} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">IC para μ (σ desconocida)</span><div class="formula-expr">\( \bar{x} \pm t_{\alpha/2,n-1} \dfrac{s}{\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">IC para una proporción</span><div class="formula-expr">\( \hat{p} \pm z_{\alpha/2}\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">IC para la varianza</span><div class="formula-expr">\( \left(\dfrac{(n-1)s^2}{\chi^2_{\alpha/2}}, \dfrac{(n-1)s^2}{\chi^2_{1-\alpha/2}}\right) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Tamaño de muestra (media)</span><div class="formula-expr">\( n = \left(\dfrac{z_{\alpha/2}\sigma}{E}\right)^2 \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 6 — Pruebas de Hipótesis</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Z para la media (σ conocida)</span><div class="formula-expr">\( Z = \dfrac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">t para la media (σ desconocida)</span><div class="formula-expr">\( T = \dfrac{\bar{x}-\mu_0}{s/\sqrt{n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">t para diferencia de medias (varianzas iguales)</span><div class="formula-expr">\( T = \dfrac{\bar{x}_1-\bar{x}_2}{S_p\sqrt{1/n_1+1/n_2}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Varianza combinada (pooled)</span><div class="formula-expr">\( S_p^2 = \dfrac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Z para una proporción</span><div class="formula-expr">\( Z = \dfrac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">χ² para la varianza</span><div class="formula-expr">\( \chi^2 = \dfrac{(n-1)s^2}{\sigma_0^2} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">F para comparar varianzas</span><div class="formula-expr">\( F = \dfrac{s_1^2}{s_2^2} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">χ² de bondad de ajuste / independencia</span><div class="formula-expr">\( \chi^2 = \sum \dfrac{(O_i-E_i)^2}{E_i} \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 7 — Regresión y Correlación</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Coeficiente de correlación de Pearson</span><div class="formula-expr">\( r = \dfrac{\sum(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum(x_i-\bar{x})^2 \sum(y_i-\bar{y})^2}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Recta de regresión</span><div class="formula-expr">\( \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Pendiente estimada</span><div class="formula-expr">\( \hat{\beta}_1 = \dfrac{S_{xy}}{S_{xx}} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Intercepto estimado</span><div class="formula-expr">\( \hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Coeficiente de determinación</span><div class="formula-expr">\( R^2 = 1 - \dfrac{SSE}{SST} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">t para la pendiente</span><div class="formula-expr">\( T = \dfrac{\hat{\beta}_1}{s(\hat{\beta}_1)} \)</div></div>
+    </div>
+  </details>
+
+  <details class="formulario-cap">
+    <summary>Cap. 8/9 — Simulación Estadística</summary>
+    <div class="formulario-grid">
+      <div class="formula-card"><span class="formula-nombre">Generador congruencial lineal (LCG)</span><div class="formula-expr">\( X_{n+1} = (aX_n+c) \bmod m \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Números pseudoaleatorios U(0,1)</span><div class="formula-expr">\( U_n = X_n/m \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Estimación Monte Carlo de π</span><div class="formula-expr">\( \pi \approx 4 \cdot \dfrac{\text{puntos dentro}}{N} \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Integración Monte Carlo</span><div class="formula-expr">\( \hat{I} = \dfrac{1}{N}\sum_{i=1}^{N} f(U_i) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Método de la transformada inversa</span><div class="formula-expr">\( X = F^{-1}(U) \)</div></div>
+      <div class="formula-card"><span class="formula-nombre">Simulación de exponencial</span><div class="formula-expr">\( X = -\dfrac{1}{\lambda}\ln(U) \)</div></div>
+    </div>
+  </details>
+
+</section>
+
 </main>
 <footer class="pie-institucional">
   <div>EPN · Physics Centro de educación Continua</div>
@@ -4897,3 +5533,5 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 </body>
 </html>
+
+   
